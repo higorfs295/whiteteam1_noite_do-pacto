@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Noite do Pacto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Silkscreen&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Mundo único, sempre de noite: chuva de néon sobre tinta azul-esverdeada. */
+  --noite:#0b1014; --painel:#131b22; --linha:#26323d; --texto:#e9e5dc; --apagado:#93a0ad;
+  --prata:#d5d9dd; --ambar:#f0b44c; --espinho:#ff6b6b; --mare:#5aa9ff; --veu:#b28dff; --musgo:#5fd3a0;
+  --f-titulo:"Pixelify Sans", "Courier New", monospace; --f-rotulo:"Silkscreen", "Courier New", monospace;
+  --f-texto:"Atkinson Hyperlegible", Arial, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--noite);color:var(--texto);font-family:var(--f-texto);font-size:17px;line-height:1.55}
+img.px{image-rendering:pixelated;image-rendering:crisp-edges}
+a{color:var(--mare)}
+:focus-visible{outline:3px solid var(--ambar);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--f-titulo);font-weight:700;text-wrap:balance;margin:0}
+h2{font-size:clamp(28px,4vw,40px);line-height:1.1}
+h3{font-size:22px}
+.rotulo{font-family:var(--f-rotulo);font-size:12px;letter-spacing:.08em;color:var(--prata);text-transform:uppercase}
+p{max-width:65ch}
+section{padding:56px 0;border-top:1px solid var(--linha)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.sec-head p{color:var(--apagado);margin:0}
+
+/* ---------- topo: a cidade ---------- */
+.topo{position:relative;overflow:hidden;border-bottom:4px solid var(--ambar)}
+.ceu{position:relative;height:clamp(360px,52vw,520px);background:#1b2a24;transition:filter .5s}
+.camada{position:absolute;left:0;right:0;bottom:0;background-repeat:repeat-x;background-position:0 100%;image-rendering:pixelated}
+.c0{top:0;background-image:url(img/cidade_0.png);background-size:auto 100%}
+.c1{height:78%;background-image:url(img/cidade_1.png);background-size:auto 100%;animation:anda 140s linear infinite}
+.c2{height:82%;background-image:url(img/cidade_2.png);background-size:auto 100%;animation:anda 90s linear infinite}
+.c3{height:58%;background-image:url(img/cidade_3.png);background-size:auto 100%;animation:anda 50s linear infinite}
+@keyframes anda{from{background-position-x:0}to{background-position-x:-2000px}}
+.chuva{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(105deg,transparent 0 22px,rgba(178,141,255,.16) 22px 23px,transparent 23px 47px);animation:chove 1.2s linear infinite}
+@keyframes chove{from{background-position:0 0}to{background-position:-30px 120px}}
+.ceu::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,20,.55),rgba(11,16,20,.1) 40%,rgba(11,16,20,.75))}
+.titulo{position:absolute;z-index:2;left:0;right:0;top:28px}
+.titulo h1{font-size:clamp(40px,7vw,78px);line-height:1;color:var(--texto);text-shadow:4px 4px 0 #000}
+.titulo .sub{font-size:clamp(16px,2vw,20px);max-width:44ch;margin-top:12px;color:var(--texto);text-shadow:2px 2px 0 #000}
+.elenco{position:absolute;z-index:2;bottom:18px;left:0;right:0;display:flex;justify-content:center;gap:clamp(6px,2vw,22px)}
+.elenco button{background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.elenco img{width:clamp(48px,7vw,84px);height:auto;filter:drop-shadow(3px 3px 0 #000);transition:transform .2s}
+.elenco button:hover img{transform:translateY(-6px)}
+.elenco span{font-family:var(--f-rotulo);font-size:10px;color:var(--texto);background:rgba(0,0,0,.6);padding:2px 5px}
+.estado{position:absolute;z-index:3;right:20px;top:24px;font-family:var(--f-rotulo);font-size:12px;background:#000;border:2px solid var(--prata);padding:8px 12px;color:var(--prata)}
+.ceu.pausa{filter:grayscale(.8) brightness(.7)}
+.ceu.pausa .camada,.ceu.pausa .chuva{animation-play-state:paused}
+.ceu.ferro{filter:sepia(1) hue-rotate(-40deg) saturate(3) brightness(.65)}
+.ceu.ferro .camada,.ceu.ferro .chuva{animation-play-state:paused}
+.ceu.fim{filter:brightness(1.25) saturate(.6)}
+.ceu.antes .camada,.ceu.antes .chuva{animation-play-state:paused}
+.controle{background:#0d1418;padding:16px 0}
+.controle .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.controle .rotulo{margin-right:6px}
+.pal{font-family:var(--f-rotulo);font-size:13px;background:var(--painel);color:var(--prata);border:2px solid var(--prata);padding:9px 14px;cursor:pointer;box-shadow:3px 3px 0 #000}
+.pal:hover{background:#1c2731}
+.pal[aria-pressed="true"]{background:var(--prata);color:var(--noite)}
+.pal.ferro{border-color:var(--ambar);color:var(--ambar)}
+.pal.ferro[aria-pressed="true"]{background:var(--ambar);color:var(--noite)}
+.legenda{flex-basis:100%;color:var(--apagado);font-size:15px;margin:2px 0 0}
+
+/* ---------- glossário ---------- */
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linha);vertical-align:top}
+th{font-family:var(--f-rotulo);font-size:11px;font-weight:400;color:var(--noite);background:var(--prata)}
+td:first-child{font-weight:700}
+.leis{display:grid;gap:12px}
+.caixa{margin-top:28px;background:var(--painel);padding:18px 20px;border:1px solid rgba(255,255,255,.12)}
+.cx3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+.cx3 b{display:block;margin-bottom:4px}
+.cx3 span{font-size:.95rem;line-height:1.45}
+.caixa .mini{font-size:.8rem;opacity:.75;margin-top:10px}
+.lei{background:var(--painel);border-left:6px solid var(--veu);padding:14px 16px}
+.lei b{font-family:var(--f-titulo);font-size:19px;display:block}
+.lei span{color:var(--apagado)}
+.lei.ferro{border-left-color:var(--ambar)}
+
+/* ---------- cartas ---------- */
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filtro{font-family:var(--f-rotulo);font-size:12px;background:none;color:var(--texto);border:2px solid var(--linha);padding:7px 12px;cursor:pointer}
+.filtro[aria-pressed="true"]{border-color:var(--ambar);color:var(--ambar)}
+.cartas{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
+.cartao{display:flex;flex-direction:column;gap:8px}.cartao[hidden]{display:none}.hist{font-size:14px;color:var(--apagado);margin:0}
+.carta{perspective:1000px;aspect-ratio:3/4;width:100%;border:0;background:none;padding:0;cursor:pointer;text-align:left;color:inherit;font:inherit}
+.carta[hidden]{display:none}
+.giro{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.carta.virada .giro{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;overflow:hidden}
+.frente{background:url(img/carta_verso.png) center/cover;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.frente .nome{font-family:var(--f-titulo);font-size:20px;background:rgba(0,0,0,.72);padding:4px 12px;border:2px solid var(--cor)}
+.frente img{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:38%;filter:drop-shadow(0 0 14px var(--cor))}
+.verso{transform:rotateY(180deg);background:#15121c url(img/carta_frente.png) center/100% 100% no-repeat;padding:17% 12% 13%;display:flex;flex-direction:column;gap:5px;font-size:13px;line-height:1.3}
+.verso .topo-c{display:flex;gap:10px;align-items:center}
+.verso .topo-c img{width:44px}
+.verso h3{font-size:18px}
+.verso .lado{font-family:var(--f-rotulo);font-size:10px;color:var(--cor)}
+.verso .tres{font-style:italic;color:var(--apagado)}
+.attr{display:grid;grid-template-columns:1fr 60px 20px;gap:6px;align-items:center;font-size:11.5px}
+.barra{height:8px;background:#2a2633;display:flex;gap:1px}
+.barra i{flex:1;background:var(--cor)}
+.barra i.v{background:transparent}
+.defeito{color:var(--texto)}
+.defeito b{font-family:var(--f-rotulo);font-size:10px;color:var(--ambar)}
+.dica{color:var(--apagado);font-size:14px;margin-top:10px}
+
+/* ---------- pacto ---------- */
+.roe{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.caixa{background:var(--painel);border:2px solid var(--linha);padding:18px 20px}
+.caixa.ok{border-color:var(--prata)}.caixa.nao{border-color:var(--espinho)}
+.caixa h3{margin-bottom:8px}
+.caixa ul{margin:0;padding-left:20px}
+.caixa li{margin:6px 0}
+.calc{margin-top:28px;background:var(--painel);border:2px solid var(--ambar);padding:20px}
+.formula{font-family:"Courier New",monospace;font-size:clamp(16px,2.4vw,22px);font-weight:700;margin:6px 0 16px;overflow-x:auto}
+.formula em{color:var(--ambar);font-style:normal}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px 24px}
+.sliders label{display:flex;flex-direction:column;gap:4px;font-size:15px}
+.sliders output{font-family:"Courier New",monospace;color:var(--ambar)}
+input[type=range]{accent-color:var(--ambar);width:100%}
+.nota{display:flex;align-items:baseline;gap:14px;margin-top:16px;flex-wrap:wrap}
+.nota strong{font-family:var(--f-titulo);font-size:48px;color:var(--ambar);font-variant-numeric:tabular-nums}
+
+/* ---------- a noite ---------- */
+.palco{position:relative;height:clamp(240px,34vw,340px);background:#000 center/cover no-repeat;image-rendering:pixelated;border:3px solid var(--linha);overflow:hidden}
+.palco .gente{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:24px}
+.palco .gente img{width:clamp(48px,7vw,80px);filter:drop-shadow(3px 3px 0 #000)}
+.palco .hora{position:absolute;top:12px;left:12px;font-family:var(--f-rotulo);font-size:12px;background:#000;color:var(--ambar);padding:6px 10px}
+.fala{background:var(--painel);border:3px solid var(--linha);border-top:0;padding:16px 20px;min-height:140px}
+.fala h3{margin-bottom:6px}
+.fala .tec{font-size:15px;color:var(--apagado);margin:8px 0 0}
+.fala .tec b{color:var(--prata)}
+.passos{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.passo{font-family:var(--f-rotulo);font-size:11px;background:none;color:var(--apagado);border:2px solid var(--linha);padding:7px 10px;cursor:pointer}
+.passo[aria-current="step"]{color:var(--noite);background:var(--ambar);border-color:var(--ambar)}
+
+/* ---------- ameaças ---------- */
+.ameacas{display:grid;gap:8px}
+.am{display:grid;grid-template-columns:44px 1fr 56px 150px;gap:12px;align-items:center;background:var(--painel);padding:10px 14px;border-left:6px solid var(--linha)}
+.am .id{font-family:var(--f-rotulo);color:var(--ambar)}
+.am .pts{font-family:"Courier New",monospace;text-align:right;font-variant-numeric:tabular-nums}
+.chip{font-family:var(--f-rotulo);font-size:10px;padding:4px 8px;text-align:center;border:2px solid}
+.chip.sim{color:var(--musgo);border-color:var(--musgo)}.chip.nao{color:var(--espinho);border-color:var(--espinho)}.chip.talvez{color:var(--ambar);border-color:var(--ambar)}
+.am small{display:block;color:var(--apagado);font-size:14px}
+@media (max-width:620px){.am{grid-template-columns:40px 1fr;}.am .pts,.am .chip{grid-column:2}.am .pts{text-align:left}}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--linha);color:var(--apagado);font-size:14px}
+footer li{margin:4px 0}
+@media (prefers-reduced-motion:reduce){.camada,.chuva{animation:none!important}.giro{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="ceu antes" id="ceu">
+    <div class="camada c0"></div><div class="camada c1"></div><div class="camada c2"></div><div class="camada c3"></div>
+    <div class="chuva"></div>
+    <div class="titulo"><div class="wrap">
+      <p class="rotulo">UrutauSec · White Team 1 · Encontro 1</p>
+      <h1>A Noite do Pacto</h1>
+      <p class="sub">Uma cidade cyberpunk onde as cortes de fadas viraram empresas, e um exercício de segurança contado como história.</p>
+    </div></div>
+    <div class="estado" id="estado" aria-live="polite">ANTES DA PRIMEIRA BADALADA</div>
+    <div class="elenco" id="elenco"></div>
+  </div>
+  <div class="controle">
+    <div class="wrap">
+      <span class="rotulo">Palavras de controle</span>
+      <button class="pal" data-p="startex" aria-pressed="false">STARTEX</button>
+      <button class="pal" data-p="pausa" aria-pressed="false">PAUSA</button>
+      <button class="pal" data-p="retoma" aria-pressed="false">RETOMA</button>
+      <button class="pal ferro" data-p="ferro" aria-pressed="false">FERRO! (MUNDO REAL)</button>
+      <button class="pal" data-p="endex" aria-pressed="false">ENDEX</button>
+      <p class="legenda" id="legenda">Clique numa palavra pra ver o que ela faz com a noite.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="mundo"><div class="wrap">
+  <div class="sec-head"><p class="rotulo">O mundo e o exercício</p><h2>Cada coisa da história tem um nome técnico</h2>
+  <p>Em Nova Aurora toda a água passa pela Casa Vésper, uma companhia de saneamento inventada, com escritório (TI) e casa de bombas automatizada (OT). Uma vez por ano ela testa as próprias defesas.</p></div>
+  <div class="duas">
+    <table>
+      <thead><tr><th>Na história</th><th>No exercício</th></tr></thead>
+      <tbody>
+        <tr><td>A Noite do Pacto</td><td>Exercício Red × Blue</td></tr>
+        <tr><td>O Pacto, lido em voz alta</td><td>Regras de engajamento (RoE)</td></tr>
+        <tr><td>O Véu</td><td>Laboratório isolado</td></tr>
+        <tr><td>Corte do Espinho</td><td>Red Team</td></tr>
+        <tr><td>Corte da Maré</td><td>Blue Team</td></tr>
+        <tr><td>Corte de Prata</td><td>White Team</td></tr>
+        <tr><td>Primeira e última badalada</td><td>STARTEX e ENDEX</td></tr>
+        <tr><td>“Ferro!”</td><td>MUNDO REAL</td></tr>
+        <tr><td>Os sussurros da Prata</td><td>Injects do roteiro (MSEL)</td></tr>
+        <tr><td>O livro de prata</td><td>Registro do avaliador e logs</td></tr>
+        <tr><td>O bestiário</td><td>MITRE ATT&amp;CK</td></tr>
+      </tbody>
+    </table>
+    <div class="leis">
+      <p class="rotulo">As leis do mundo</p>
+      <div class="lei"><b>Fada não mente.</b><span>Quem julga diz a verdade, sempre com evidência. Por isso a Corte de Prata assina a nota.</span></div>
+      <div class="lei"><b>Fada adora brecha.</b><span>Regra mal escrita vira jogada. O Pacto precisa fechar todos os furos: o que não foi dito em voz alta está proibido.</span></div>
+      <div class="lei"><b>Dívida de fada não se esquece.</b><span>Vínculo entre pessoas é conflito de interesse. Quem tem vínculo com um time não avalia esse time.</span></div>
+      <div class="lei ferro"><b>Fada não suporta ferro.</b><span>Quem gritar “Ferro!” para a noite inteira. É a parada de emergência: problema de verdade vem antes do jogo.</span></div>
+      <div class="lei"><b>O livro de prata não se apaga.</b><span>Tudo o que acontece na noite fica registrado com hora certa e ninguém consegue negar depois o que fez. No mundo real isso se chama não repúdio.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="cortes"><div class="wrap">
+  <div class="sec-head"><p class="rotulo">As cortes</p><h2>Seis personagens, nenhum perfeito</h2>
+  <p>Atributos de 1 a 20, como no D&amp;D. Clique numa carta pra virar.</p></div>
+  <div class="filtros" role="group" aria-label="Filtrar por corte">
+    <button class="filtro" data-f="todas" aria-pressed="true">Todas</button>
+    <button class="filtro" data-f="red" aria-pressed="false">Espinho · Red</button>
+    <button class="filtro" data-f="blue" aria-pressed="false">Maré · Blue</button>
+    <button class="filtro" data-f="white" aria-pressed="false">Prata · White</button>
+  </div>
+  <div class="cartas" id="cartas"></div>
+  <p class="dica">No celular, toque de novo pra desvirar.</p>
+</div></section>
+
+<section id="pacto"><div class="wrap">
+  <div class="sec-head"><p class="rotulo">O Pacto · regras do exercício</p><h2>O que não está permitido está proibido</h2></div>
+  <div class="roe">
+    <div class="caixa ok"><h3>Permitido</h3><ul>
+      <li>Agir só nas máquinas dentro do Véu</li><li>Espinho: só as ações do roteiro, no horário previsto</li>
+      <li>Maré: monitorar, bloquear, isolar e restaurar</li><li>Usar as contas de teste da Green</li></ul></div>
+    <div class="caixa nao"><h3>Proibido</h3><ul>
+      <li>Qualquer tráfego pra fora do Véu</li><li>Espinho: improvisar alvo, técnica ou horário</li>
+      <li>Engenharia social contra pessoas reais</li><li>Combinar jogada entre cortes</li></ul></div>
+  </div>
+  <div class="calc">
+    <p class="rotulo">A nota da manhã seguinte</p>
+    <div class="formula">S = 100 × ( <em>0,40</em>·D + <em>0,40</em>·R + <em>0,20</em>·I ) − P</div>
+    <div class="sliders">
+      <label for="sD">D · o serviço ficou no ar? <output id="oD"></output><input id="sD" type="range" min="0" max="24" value="22"></label>
+      <label for="sR">R · pontos na rubrica (de 21) <output id="oR"></output><input id="sR" type="range" min="0" max="21" value="17"></label>
+      <label for="sI">I · respostas no prazo (de 5) <output id="oI"></output><input id="sI" type="range" min="0" max="5" value="4"></label>
+      <label for="sP">P · penalidades em pontos <output id="oP"></output><input id="sP" type="range" min="0" max="30" step="5" value="0"></label>
+    </div>
+    <div class="nota"><strong id="nota">85,0</strong><span id="notaTxt">Nota da Corte da Maré. Pesos da equipe pro exemplo, não são norma.</span></div>
+  </div>
+  <div class="caixa">
+    <p class="rotulo">Fora da história · a caixa de ferramentas</p>
+    <div class="cx3">
+      <div><b>Observar</b><span>Monitoramento e observabilidade. Exemplos: Wazuh (SIEM e XDR aberto) e Datadog Watchdog (detecção de anomalia, comercial). Na noite, a checagem a cada 5 minutos faz esse papel.</span></div>
+      <div><b>Provar</b><span>Não repúdio: log centralizado, relógio sincronizado, registro com hash ou assinatura, armazenamento que só aceita acréscimo.</span></div>
+      <div><b>Treinar</b><span>Kits em repositório: SecurityNomad/ir-tabletop-library, redcanaryco/atomic-red-team, mitre/caldera, splunk/botsv3 e os pacotes de tabletop da CISA (CTEP).</span></div>
+    </div>
+    <p class="mini">Nomes de ferramenta são exemplos, não recomendação de produto.</p>
+  </div>
+</div></section>
+
+<section id="noite"><div class="wrap">
+  <div class="sec-head"><p class="rotulo">A noite, passo a passo</p><h2>Do primeiro sino à manhã seguinte</h2>
+  <p>Cada cena é um evento do roteiro do exercício-exemplo.</p></div>
+  <div class="palco" id="palco"><span class="hora" id="hora"></span><div class="gente" id="gente"></div></div>
+  <div class="fala" aria-live="polite"><h3 id="cenaTit"></h3><p id="cenaTxt" style="margin:0"></p><p class="tec" id="cenaTec"></p></div>
+  <div class="passos" id="passos" role="group" aria-label="Escolher cena"></div>
+</div></section>
+
+<section id="ameacas"><div class="wrap">
+  <div class="sec-head"><p class="rotulo">O bestiário da Casa Vésper</p><h2>Priorizar não é o mesmo que escolher</h2>
+  <p>Nota = probabilidade × impacto (1 a 5). Depois vem o filtro: dá pra simular com segurança, respeita o Pacto e testa os objetivos?</p></div>
+  <div class="ameacas" id="listaAm"></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>Empresa, ameaças, notas e personagens são fictícios. Feito pela equipe White Team 1 do grupo de estudos UrutauSec: Higor Ferreira, Hugo, Isaque e João Vitor Carvalho.</p>
+  <p class="rotulo">Créditos das artes</p>
+  <ul>
+    <li>Cidade (Parallax Industrial) e casa de bombas (Bulkhead Walls): Luis Zuno, @ansimuz, ansimuz.com, licença CC0.</li>
+    <li>Fundo da Corte da Maré (Underwater Fantasy): Luis Zuno, @ansimuz, licença CC BY 3.0.</li>
+    <li>Fadas e Dona Ivone (Oracles 1.1, cores alteradas): Svetlana Kushnariova (Cabbit) &lt;lana-chan@yandex.ru&gt;, Nila122, olonu, leangoro e Jordan Irwin (AntumDeluge), licença CC BY-SA 3.0. Doc e Bené: desenhados pela equipe, mesma licença.</li>
+    <li>Molduras das cartas (Fantasy Card, Dark Cosmic): Cethiel, opengameart.org/users/cethiel.</li>
+  </ul>
+</div></footer>
+
+<script>
+const P={
+ corvina:{n:"Corvina “Espinho”",c:"red",cor:"var(--espinho)",l:"Red · fada · ~34",t:"criativa · vaidosa · impaciente",a:[["Astúcia",18],["Furtividade",16],["Paciência",7],["Disc. de escopo",9],["Registro",6]],d:"Quer o ataque bonito, não o útil. Odeia registrar o que fez.",h:"Trocou o nome verdadeiro por olhos que veem as frestas das muralhas. Deve uma noite antiga a alguém da Maré."},
+ doc:{n:"Doc Ferraz",c:"red",cor:"var(--espinho)",l:"Red · humano · 52",t:"metódico · cético · professoral",a:[["Astúcia",11],["Furtividade",10],["Paciência",18],["Disc. de escopo",17],["Registro",19]],d:"Rígido. Não improvisa quando o plano falha e dá sermão em todo mundo.",h:"Ex-perito forense. Usa o único anel de ferro do Espinho e segura a Corvina dentro do Pacto."},
+ lirio:{n:"Lírio Maré",c:"blue",cor:"var(--mare)",l:"Blue · meio-fada · 23",t:"atento · ansioso · orgulhoso",a:[["Vigilância",19],["Sangue-frio",8],["Conhecer terreno",10],["Comunicação",9],["Trab. em equipe",7]],d:"Não pede ajuda e confia demais no que a tela mostra.",h:"Trocado no berço, criado à beira do canal. Analista da madrugada. Deve um favor à Corvina."},
+ ivone:{n:"Dona Ivone",c:"blue",cor:"var(--mare)",l:"Blue · humana · 61",t:"experiente · calma · teimosa",a:[["Vigilância",12],["Sangue-frio",18],["Conhecer terreno",20],["Comunicação",14],["Trab. em equipe",16]],d:"Desconfia de sistema novo e demora a escalar o problema.",h:"Mulher negra de cabelo grisalho trançado. Trinta anos na casa de bombas. Reconhece cada bomba pelo barulho."},
+ ysolde:{n:"Ysolde de Prata",c:"white",cor:"var(--prata)",l:"White · fada antiga · diretora",t:"justa · literal · distante",a:[["Imparcialidade",19],["Clareza",17],["Leitura de sala",8],["Gestão do tempo",15],["Rigor/evidência",18]],d:"Tão literal que trava quando algo foge do que está escrito.",h:"Escreve o Pacto palavra por palavra. Não consegue mentir, por isso assina a nota."},
+ bene:{n:"Bené Takeda",c:"white",cor:"var(--prata)",l:"White · humano · 29 · avaliador",t:"observador · gentil · disperso",a:[["Imparcialidade",11],["Clareza",13],["Leitura de sala",18],["Gestão do tempo",9],["Rigor/evidência",16]],d:"Coração mole. Atrasa os injects porque para pra conversar.",h:"Neto de imigrantes japoneses, nascido em Nova Aurora. Ex-professor de xadrez de praça e professor do Lírio. Anota tudo no livro de prata."}
+};
+const ordem=["corvina","doc","lirio","ivone","ysolde","bene"];
+const el=(t,a={},h="")=>{const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);e.innerHTML=h;return e;};
+
+// elenco no topo
+const elenco=document.getElementById("elenco");
+ordem.forEach(k=>{const b=el("button",{type:"button","aria-label":"Ver carta de "+P[k].n});b.innerHTML=`<img class="px" src="img/sp_${k}.png" alt=""><span>${P[k].n.split(" ")[0]}</span>`;b.onclick=()=>{const c=document.getElementById("carta-"+k);c.classList.add("virada");c.scrollIntoView({behavior:"smooth",block:"center"});};elenco.append(b);});
+
+// cartas
+const cartas=document.getElementById("cartas");
+ordem.forEach(k=>{const p=P[k];const b=el("button",{type:"button",class:"carta",id:"carta-"+k,"data-c":p.c,"aria-label":"Carta de "+p.n+". Clique pra virar."});b.style.setProperty("--cor",p.cor);
+ const attrs=p.a.map(([n,v])=>`<div class="attr"><span>${n}</span><span class="barra">${Array.from({length:10},(_,i)=>`<i class="${i<Math.round(v/2)?"":"v"}"></i>`).join("")}</span><span>${v}</span></div>`).join("");
+ b.innerHTML=`<div class="giro"><div class="face frente"><img class="px" src="img/sp_${k}.png" alt=""><span class="nome">${p.n}</span></div><div class="face verso"><div class="topo-c"><img class="px" src="img/sp_${k}.png" alt=""><div><h3>${p.n}</h3><div class="lado">${p.l}</div></div></div><div class="tres">${p.t}</div>${attrs}<div class="defeito"><b>DEFEITO</b> ${p.d}</div></div></div>`;
+ b.onclick=()=>b.classList.toggle("virada");const w=el("div",{class:"cartao","data-c":p.c});w.append(b,el("p",{class:"hist"},p.h));cartas.append(w);});
+document.querySelectorAll(".filtro").forEach(f=>f.onclick=()=>{document.querySelectorAll(".filtro").forEach(x=>x.setAttribute("aria-pressed",x===f));document.querySelectorAll(".cartao").forEach(c=>c.hidden=!(f.dataset.f==="todas"||c.dataset.c===f.dataset.f));});
+
+// palavras de controle
+const ceu=document.getElementById("ceu"),estado=document.getElementById("estado"),leg=document.getElementById("legenda");
+const PAL={startex:["antes ferro pausa fim","","A PRIMEIRA BADALADA · T+0","STARTEX: o exercício começa oficialmente e o relógio do roteiro vai pra zero."],
+ pausa:["antes ferro fim","pausa","PAUSA · NADA É PONTUADO","PAUSA: todo mundo para. A Ysolde usou na noite quando a Corvina tentou combinar jogada com o Lírio."],
+ retoma:["antes ferro pausa fim","","A NOITE CONTINUA","RETOMA: o jogo volta exatamente de onde parou."],
+ ferro:["antes pausa fim","ferro","FERRO! · MUNDO REAL","FERRO! (MUNDO REAL): qualquer pessoa pode gritar. Problema de verdade, como alguém passando mal ou o Véu vazando, encerra o jogo na hora."],
+ endex:["antes ferro pausa","fim","A ÚLTIMA BADALADA · ENDEX","ENDEX: fim. Ninguém mexe mais no ambiente e as cortes se sentam juntas pra conversar."]};
+document.querySelectorAll(".pal").forEach(b=>b.onclick=()=>{const p=PAL[b.dataset.p];p[0].split(" ").forEach(c=>ceu.classList.remove(c));if(p[1])ceu.classList.add(p[1]);estado.textContent=p[2];leg.textContent=p[3];document.querySelectorAll(".pal").forEach(x=>x.setAttribute("aria-pressed",x===b));});
+
+// calculadora
+const fmt=(v,d=1)=>v.toFixed(d).replace(".",",");
+function calc(){const D=+sD.value/24,R=+sR.value/21,I=+sI.value/5,Pn=+sP.value;oD.textContent=`${sD.value}/24 = ${fmt(D,3)}`;oR.textContent=`${sR.value}/21 = ${fmt(R,3)}`;oI.textContent=`${sI.value}/5 = ${fmt(I,3)}`;oP.textContent=`${Pn} pontos`;
+ const S=100*(0.4*D+0.4*R+0.2*I)-Pn;nota.textContent=fmt(S);}
+["sD","sR","sI","sP"].forEach(i=>document.getElementById(i).oninput=calc);calc();
+
+// a noite
+const CENAS=[
+ {h:"T+0",bg:"img/cidade_0.png",cam:"cidade",g:["ysolde","bene"],t:"A primeira badalada",x:"No alto da Torre de Prata, a Ysolde lê o Pacto em voz alta: “O que não for dito aqui está proibido. Quem gritar Ferro! para a noite inteira.”",tec:"<b>Técnico:</b> leitura das regras de engajamento e STARTEX."},
+ {h:"T+10",bg:"img/cidade_0.png",cam:"cidade",g:["corvina","lirio"],t:"Os portões da Casa Vésper",x:"A Corvina percorre os portões, vendo quem responde. No painel, o Lírio percebe o movimento e anota.",tec:"<b>Técnico:</b> descoberta de serviços de rede, ATT&amp;CK T1046 (ameaça A5)."},
+ {h:"T+18",bg:"img/cidade_0.png",cam:"cidade",g:["doc","bene"],t:"A porta mais simples",x:"O Doc entra com uma credencial de teste com senha fraca, esquecida por alguém. O Bené registra tudo no livro de prata.",tec:"<b>Técnico:</b> uso de contas válidas, ATT&amp;CK T1078 (ameaça A1)."},
+ {h:"T+40",bg:"img/bombas.png",cam:"bombas",g:["corvina","ivone"],t:"O sussurro ao controlador",x:"À meia-noite, a Corvina sussurra uma ordem ao controlador das bombas. Uma válvula muda de posição.",tec:"<b>Técnico:</b> mensagem de comando não autorizada ao CLP, ATT&amp;CK ICS T1692.001 (ameaça A3)."},
+ {h:"T+55",bg:"img/bombas.png",cam:"bombas",g:["lirio","ivone"],t:"A bomba que canta errado",x:"No painel do Lírio, tudo verde: a tela foi enfeitiçada. Lá embaixo, a Dona Ivone ouve a bomba cantar errado, desce a escada e vê a válvula fora do lugar.",tec:"<b>Técnico:</b> manipulação da tela de operação, ATT&amp;CK ICS T0832 (ameaça A4). Lição: conferir o processo, não só a tela."},
+ {h:"T+60",bg:"img/mare.png",cam:"mare",g:["corvina","lirio","bene","ysolde"],t:"A dívida",x:"Encurralada, a Corvina manda pro Lírio: “Te devo uma noite antiga. Quer uma dica?” O Bené vê, e como foi professor do Lírio, se declara impedido. A Ysolde badala a PAUSA.",tec:"<b>Técnico:</b> combinação entre times é proibida; conflito de interesse do avaliador. O Lírio mostrou a mensagem em vez de usar, então não perde ponto."},
+ {h:"T+120",bg:"img/mare.png",cam:"mare",g:["corvina","doc","lirio","ivone","ysolde","bene"],t:"A última badalada",x:"De manhã as cortes sentam juntas. A Ysolde não mente, então cada nota vem com a evidência do lado: o registro do Doc, o relatório do Lírio, a escada da Ivone.",tec:"<b>Técnico:</b> ENDEX, conversa final (hotwash) e relatório pós-ação. A White Team não joga, mas é ela quem faz a noite valer."}
+];
+const palco=document.getElementById("palco"),gente=document.getElementById("gente"),passos=document.getElementById("passos");
+function cena(i){const c=CENAS[i];palco.style.backgroundImage=c.cam==="cidade"?"url(img/cidade_3.png),url(img/cidade_2.png),url(img/cidade_1.png),url(img/cidade_0.png)":`url(${c.bg})`;palco.style.backgroundSize=c.cam==="cidade"?"auto 60%,auto 85%,auto 80%,cover":"cover";palco.style.backgroundRepeat=c.cam==="cidade"?"repeat-x":"no-repeat";palco.style.backgroundPosition=c.cam==="cidade"?"0 100%,0 100%,0 100%,center":"center";
+ document.getElementById("hora").textContent=c.h+" min";gente.innerHTML=c.g.map(k=>`<img class="px" src="img/sp_${k}.png" alt="${P[k].n}">`).join("");cenaTit.textContent=c.t;cenaTxt.textContent=c.x;cenaTec.innerHTML=c.tec;
+ passos.querySelectorAll(".passo").forEach((b,j)=>j===i?b.setAttribute("aria-current","step"):b.removeAttribute("aria-current"));}
+CENAS.forEach((c,i)=>{const b=el("button",{type:"button",class:"passo"},c.h+" · "+c.t);b.onclick=()=>cena(i);passos.append(b);});cena(0);
+
+// ameaças
+const AM=[["A1","Credencial fraca ou vazada",16,"sim","Entra","Dá pra simular com contas de teste"],["A2","Ransomware na rede de TI",15,"talvez","Fica pro tabletop","Simular criptografia de verdade é arriscado"],["A7","Phishing contra o administrativo",12,"nao","Não entra","Engenharia social contra pessoas reais"],["A3","Comando não autorizado ao CLP",10,"sim","Entra","Testa detecção na automação simulada"],["A5","Varredura e descoberta de serviços",10,"sim","Entra","Primeiro passo de qualquer ataque"],["A6","Negação de serviço no portal web",9,"sim","Entra","Mede se o serviço ficou no ar"],["A4","Manipulação da tela da IHM",8,"sim","Entra","Testa se a defesa confere o processo"],["A8","Vazamento de dados de clientes",8,"talvez","Fica pra depois","Exigiria base fictícia grande"]];
+const lista=document.getElementById("listaAm");
+AM.forEach(a=>{const r=el("div",{class:"am"});r.style.borderLeftColor=a[2]>=15?"#8e3b3b":a[2]>=10?"var(--ambar)":"#7a6233";r.innerHTML=`<span class="id">${a[0]}</span><span>${a[1]}<small>${a[5]}</small></span><span class="pts">${a[2]}</span><span class="chip ${a[3]}">${a[4]}</span>`;lista.append(r);});
+</script>
+</body>
+</html>
