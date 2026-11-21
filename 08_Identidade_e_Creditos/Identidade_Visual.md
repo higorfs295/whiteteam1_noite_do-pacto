@@ -1,4 +1,4 @@
-# Identidade visual · White Team 1 (UrutauSec) · v7
+# Identidade visual · White Team 1 (UrutauSec) · v9
 
 A apresentação junta três coisas: as cores e a coruja da UrutauSec, o mosaico de pixels do modelo **Mowbray** e as cunhas diagonais do modelo **Donalbain** (os dois da SlidesCarnival, licença Creative Commons Attribution). O mosaico e as cunhas foram redesenhados por script nas cores do grupo, sem copiar arte dos modelos. As cores da UrutauSec continuam sendo aproximações por amostragem dos slides oficiais, não um manual de marca.
 
@@ -26,6 +26,8 @@ A apresentação junta três coisas: as cores e a coruja da UrutauSec, o mosaico
 - Cunhas diagonais e número grande nas aberturas de bloco, com a cena da noite em formato de citação
 - Cartões sem borda, com um traço âmbar no topo; borda só no que precisa de destaque
 - Marca-texto (realce) em uma frase-chave por slide, no máximo
+- Ícones do Font Awesome Free (CC BY 4.0) recoloridos nas cores do grupo, nas leis do mundo, nas palavras de controle e no campeonato
+- Arte dos agentes do Valorant só nos slides 7 e 8, com o aviso da Riot (ver `Licencas_das_artes/Valorant_Riot_Games_aviso.txt`)
 
 ## Arquivos
 - `logo_rose.png`: coruja + "URUTAUSEC", fundo transparente (usar sobre fundo escuro)

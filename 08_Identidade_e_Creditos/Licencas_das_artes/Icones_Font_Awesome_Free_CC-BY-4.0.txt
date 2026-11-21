@@ -1,0 +1,9 @@
+Ícones dos slides, da cola do jogador e do kit
+
+Os ícones (play, pausa, alerta, bandeira, livro, headset, balança, olho, chave, mãos, dado, orelha, mensagem, placa, entre outros) são do Font Awesome Free 6, gerados como PNG nas cores do grupo a partir do pacote react-icons (conjunto fa6).
+
+Licença dos ícones do Font Awesome Free: Creative Commons Attribution 4.0 International (CC BY 4.0).
+Autoria: Fonticons, Inc. · https://fontawesome.com
+Licença completa: https://fontawesome.com/license/free
+
+Alteração feita pela equipe: recoloração e exportação em PNG.

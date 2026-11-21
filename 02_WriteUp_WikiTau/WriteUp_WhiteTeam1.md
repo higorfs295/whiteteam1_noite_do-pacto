@@ -4,7 +4,7 @@ subtitle: "Write-up do Encontro 1 da trilha White Team: Fundamentos e descoberta
 ---
 
 **Trilha:** White Team · Encontro 1\
-**Equipe:** Higor Ferreira (líder), Hugo, Isaque, João Vitor Carvalho\
+**Equipe:** Higor Ferreira (líder), Hugo Mituiti, Isaque, João Vitor Carvalho\
 **Criado em:** [data da publicação] · **Última atualização:** [data da última revisão]
 
 # 1. Contexto e objetivo do tema
@@ -246,10 +246,10 @@ Os nomes de ferramenta acima são exemplos de categoria, não recomendação de 
 
 # 5. Autores (equipe)
 
-- **Higor Ferreira** (líder): descoberta de ameaças, priorização e exercício-exemplo
-- **Hugo**: papel da White Team
-- **João Vitor Carvalho**: fundamentos (formatos, autorização, escopo, regras e métricas)
-- **Isaque**: anti-manual da White Team e o jeito certo (registrar, provar e treinar)
+- **Higor Ferreira** (líder): anti-manual e o jeito certo (registrar, provar e treinar), descoberta de ameaças, priorização e exercício-exemplo
+- **João Vitor Carvalho**: papel da White Team, o profissional e fundamentos (formatos, autorização, escopo, regras e métricas)
+- **Hugo Mituiti**: aberturas dos blocos 01 e 03 e leitura da história no exercício
+- **Isaque**: aberturas dos blocos 02 e 04 e leitura da história no exercício
 
 Monitores da trilha White Team: Thâmara Cordeiro, Eduardo Martins e Alyce Suza.
 

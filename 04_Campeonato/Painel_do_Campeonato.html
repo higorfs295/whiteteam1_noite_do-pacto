@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do Campeonato · Noite do Pacto</title>
+<style>
+:root{--ink:#0E1318;--navy:#12324A;--txt:#18222D;--mut:#5A6673;--pan:#F1F3F5;--brd:#DCE2E8;--amb:#F0B44C;--ambd:#94600E;--hl:#FBE3B0;--red:#D2423E;--blue:#2C74C9;--wt:#566676}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;color:var(--txt);font-family:"Titillium Web","Segoe UI",Roboto,Arial,sans-serif}
+.app{display:grid;grid-template-rows:auto auto 1fr auto;height:100vh}
+header{display:flex;align-items:center;gap:20px;padding:6px 28px;background:var(--ink);color:#F3F1EC}
+header .t{font-weight:700;font-size:20px;letter-spacing:.04em}
+header .t small{display:block;font-size:13px;color:#C3CCD5;font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.score{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:20px}
+.score .box{display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:10px;background:#1B2A38}
+.score .n{font-size:32px;font-weight:700;line-height:1;min-width:44px;text-align:center}
+.score .red .n{color:#FF8A85}.score .blue .n{color:#8CC0FF}
+.score button{background:none;border:1px solid #44505D;color:#C3CCD5;border-radius:6px;font-size:14px;padding:2px 7px;cursor:pointer}
+nav.steps{display:flex;gap:6px;padding:6px 28px;background:#F7F6F1;border-bottom:1px solid var(--brd);flex-wrap:wrap}
+nav.steps button{border:1px solid var(--brd);background:#fff;border-radius:999px;padding:4px 14px;font-size:15px;cursor:pointer;color:var(--mut);font-family:inherit}
+nav.steps button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+main{padding:14px 28px;overflow:auto}
+footer{display:flex;gap:10px;align-items:center;padding:6px 28px;border-top:1px solid var(--brd);background:#fff}
+.btn{font-family:inherit;font-size:18px;font-weight:700;padding:8px 18px;border-radius:10px;border:none;cursor:pointer;background:var(--navy);color:#fff}
+.btn.amb{background:var(--amb);color:var(--ink)}.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.kick{font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ambd)}
+h1{margin:0 0 4px;font-size:28px;color:var(--navy);line-height:1.1}
+.cena{font-size:21px;line-height:1.3;background:#FFF6E3;border-left:6px solid var(--amb);padding:8px 16px;border-radius:8px;margin:4px 0 10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.side{border-radius:14px;padding:10px 16px;background:var(--pan);border:2px solid transparent}
+.side.red{border-color:var(--red)}.side.blue{border-color:var(--blue)}
+.who{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.spr{width:50px;height:66px;background:#1B2A38;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.spr img{width:46px;image-rendering:pixelated}
+.who b{font-size:24px;color:var(--navy);display:block}.who span{font-size:15px;font-weight:700;letter-spacing:.06em}
+.red .who span{color:var(--red)}.blue .who span{color:var(--blue)}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--brd);border-radius:10px;padding:6px 12px;margin:5px 0;cursor:pointer;font-family:inherit;font-size:19px;color:var(--txt)}
+.opt .l{font-size:24px;font-weight:700;min-width:32px;height:32px;border-radius:8px;background:var(--pan);display:flex;align-items:center;justify-content:center;color:var(--navy)}
+.opt.sel{border-color:var(--navy);background:#EAF0F5}.opt.sel .l{background:var(--navy);color:#fff}
+.opt.good{border-color:#23926A;background:#E8F6EF}.opt.bad{border-color:#C9CFD6;opacity:.7}
+.dice{display:flex;align-items:center;gap:12px;margin-top:10px;font-size:22px}
+.d20{width:52px;height:52px;border-radius:14px;background:var(--ink);color:#fff;font-size:34px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tot{font-size:34px;font-weight:700;color:var(--navy)}
+.who .dice{margin-top:0;font-size:20px}.who .dice span{font-size:20px;color:var(--txt);letter-spacing:0;font-weight:400}.who .dice span.tot{font-size:30px;font-weight:700;color:var(--navy)}
+.res{margin-top:8px;padding:8px 16px;border-radius:12px;font-size:26px;font-weight:700;text-align:center}
+.res .why{margin-top:4px}
+.res.r{background:#FDE8E7;color:#9B2A26}.res.b{background:#E5EFFB;color:#1F548F}
+.why{font-size:18px;color:var(--mut);margin-top:4px;font-weight:400;line-height:1.35}
+.timer{font-size:28px;font-weight:700;color:var(--navy);min-width:90px;text-align:center}
+.rules li{font-size:28px;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:20px}td,th{border:1px solid var(--brd);padding:10px 14px;text-align:left}th{background:var(--navy);color:#fff}
+tr.pick{background:#FFF6E3;font-weight:700}tr{cursor:pointer}
+.big{font-size:64px;font-weight:700;color:var(--navy)}
+.les{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}.les div{background:var(--pan);border-radius:12px;padding:16px;font-size:22px}
+.les b{display:block;color:var(--navy);margin-bottom:6px}
+.note{font-size:16px;color:var(--mut)}
+.spike{display:inline-block;background:var(--red);color:#fff;border-radius:8px;padding:4px 10px;font-size:18px;font-weight:700}
+@media (max-height:740px){.cena{font-size:19.5px;margin:2px 0 8px}h1{font-size:26px}.opt{font-size:18px;padding:5px 10px;margin:4px 0}.spr{width:44px;height:58px}.spr img{width:40px}.d20{width:48px;height:48px;font-size:28px}.res{font-size:24px}.why{font-size:17px}main{padding:8px 28px}}
+@media (max-width:1100px){.opt{font-size:16px}.cena{font-size:18px}.who b{font-size:20px}.res{font-size:22px}.why{font-size:15.5px}footer .note{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="t"><small>UrutauSec · White Team 1</small>Campeonato da Noite do Pacto</div>
+  <div class="score" aria-live="polite">
+    <div class="box red"><button onclick="adj('r',-1)" aria-label="Tirar um ponto do Red">−</button><span>RED</span><span class="n" id="sr">0</span><button onclick="adj('r',1)" aria-label="Dar um ponto ao Red">+</button></div>
+    <div class="box blue"><button onclick="adj('b',-1)" aria-label="Tirar um ponto do Blue">−</button><span class="n" id="sb">0</span><span>BLUE</span><button onclick="adj('b',1)" aria-label="Dar um ponto ao Blue">+</button></div>
+  </div>
+</header>
+<nav class="steps" id="steps"></nav>
+<main id="main"></main>
+<footer>
+  <button class="btn ghost" onclick="go(cur-1)">Anterior</button>
+  <button class="btn ghost" onclick="timer()">1 minuto</button><span class="timer" id="tm"></span>
+  <span class="note" style="margin-left:auto">Bônus: jogada boa +3 · empate é da defesa · ajuste manual no placar com − e +</span>
+  <button class="btn" onclick="go(cur+1)">Próximo</button>
+</footer>
+</div>
+<script>
+const SP={"corvina": "data:image/png;base64,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", "doc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABACAYAAABcIPRGAAACNUlEQVR4Xu2Zv0vDQBSAr6JDaxHpIIIQdZHiqnRyEAe3luBf4FJwd+vg4ODmLrg4OJdQdyenUBylOGlBCKUU0WKVCgrXPGheTXI/0tZc7oNS0qR3vfe9y71LCdFoNBqNRqNJLinZoS/mln942njtONJ9DjPD0/l/RDgaEPnCdoFrXHbdptdHZSL2Bma5wkfISORN0+RtgmLXbTp3ZE0kxwDOeYi8ZVlcBrAxWRPJMTDC/TX9yDS4BBD4HiFZzi/+TfIMmEbXE4qT2qPn+LS0wXQ+qvUgeQYwOOLN1hu9xFhaoO/4fNQkxwCsmJUqoSvo2cFmYK4T4gTOjaiIvQHpahSbCKNSfaCXyNZAQHIM4J3XUda7kh7bt4HBPy/sec5fdL3riagR9Q1A5HHE/cAmcOSBl69PTxM3/W/PMasRdQ3gyDfcnM2j3BcFG3jufdCmVtMZ+g5GwkzE3gD3njgMmAN+uY/BkedFG5AFcl7UhPoGjP3Bphe2vlDL+K0LkPuscwHuNuXdda/MuxcmueobEIX1LlScG9wIL92Il3dW6HGxVBqsB7Va4BM8dQ3gHRgvrCs3roGc3BZXV+oaAHAtwvuPDCvQD+S8X/8Y9Q1MmrDqUxsArEzI02X3fMNHYS/lPhDpv/tcwUbs58DYBuC0HPryI52epy9ZxjaASaEHMG20gWkj/FSi3Wkz/XbW60SJfQpJ/z/gB9Q0YdUrb+2jXC0kbAAw1vJXovk7TPOpcSjSTuznwC9dscScXlBgIQAAAABJRU5ErkJggg==", "lirio": "data:image/png;base64,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", "ivone": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABACAYAAABcIPRGAAAFNklEQVR4Xu2Yz2tcVRTHz8QZMp0gU0ns6MQfSZBosGDrry6kiyxUlGCzD7gQ6dq/oyKKaxHSlUtJ4w90qRJGtFGwTJtFjEZDJ3aCQ5g4cdq+8r0v53He63sz9547IRT6gSHz5r258/2ec+659yb3+ntzdC8zdC+LB/cNHDX3M3DU5A9LQLVVDeTYW+Wt3GH81sAMJAVXKpVIb6fTIWrRoRjyNsDCIXhkZCQW5Ha7HV0XCgUqlUpULBbDzxqhId/MeBmAeI40xK+u/hgzcPr0yzETDJ6NMtSgwMfEQLoQBCHaEMwvgM9QPnt7e1H019aumHvJbGlRZ4Cjz+JZGJMVfYBM4X6UCY8seGcAUYZ4Gfnp6WdTSwfgHp5NlpsWbwNARpsjm1UinDHOhC/qEpI0m01zadolkal5Saz7iPrvVWa2eBuA6NHR0Z4RHRt71NyPWuhBKQ0CLwNJ8YionKT8vtvtUqvVMi9mamoqc5644GUAgjj6SfE8ScvlMZrZXLpLU53eMp/JFVuDykC1thycGH6ctiffMFHMmrAwtb6+Hs6P59+O9BUvX4xMwciJ378i2t8Mts7MOe+XvLrQte+XqNFoxEqBM8Hi06IvzWAMH1QZAKP5Lp0dL9D2wa/zvke2ScniBxfM5RdXrpq/S5cvUvNmgc6Oh2Nt7+tsqDOAH0cJlcvlqH0CacQGiMdYWlQZMLVaWza7SbRGngNyPqD2z934jOgY0dp/JaoMh+WN7iMxgdjfDMdUoM4APXM+toXuNZmnj8UXto/efMII/+5vlI5ePMhp/i+EjRxHktslT17uOib6AmSB4ZLxFQ90JYTj4Xp4IEGfByycu84alaLIp4lH9J8Ov+qFygCQhxCsC9duPGK6UpMKZmICKRxw5EPx12mxNkSvnvHS7zEHBJiAEARhUqgkKf7zqw/5KT9AnYEkxkRtOeB+ntXXUTZ4tlX7MkAL9mUgBr7+8FJQr9fp/doyYYvRC0zcbz8Oxc/OzlKb/vfyoOpCzDef/Brc3v2TIH5jYyMmZGJiInYt7y8sLJhNIFrv9d08vfbuc6o1AKgzAPFDpYcpX3mBbjZ+ppmZGWOEwXUWOzs7VK1WzT7qeLlsxtKaUC1kLB488OBjNPzUOfMeolm4NMPv5X2I5zJCIDBmpuMeOJdQUjzIFcMTGej89mlPHcWT75j73fpidKjZvhWe2G7v/eNcTuoSQuSl+KATnos5G7d2/4oZ4eclmAPIRH7ypbuet8WphDj6WeJdQPlA/Pz8fFSKmlJyMsA1nxZ5V3AcxX5qZWUlKsG0LPXD2UAayXKxhUvIB2sDcvIC1DxeWvGyhHj+ANcysjKQrP1BIEtIgjJyMWFlQNa+rP9uYzXVi2yrTNpnsoTkfZe5YG0gKcRFfJoJWUI8VprJfjgbGBRZJeSKswE54RiXlEuSXSht7H44G+AO5Et+cs4sZEFp3GtMlYFBkRs75T2UtYG0fo92py0f7mwYI4nL2mJlAHt17BQxsMvgrvD4LrtSKwM+EbJFGxhrA5wFRAevtPKx6ePJZ3jl5XFdog+czgN87NOenvqhOVZaZ6AfNtFnXJ7tx8AMHBWHYiBtRdWssjZ4GUjrHL2Ept3Tdh9GZYA7EmABfMBhZFfBe0Y+x9917TwSpy6UhU0UbZ7RoMoAkOtCEhlxmZG053yiD7wyABPtn/4NfvjlD6vgJY29cupJGnnxuPr/ot4GIB6DQIgWjOFjQl1CLH4Q+IylNuATtSQ+Y6kNAJ8fZnzH8JrESRO2peArWnIHt5LVCCzOL88AAAAASUVORK5CYII=", "ysolde": "data:image/png;base64,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", "bene": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABACAYAAABcIPRGAAACIklEQVR4Xu2ZPUsDMRjHWy3F0kUEpYtVKhR1cHBz09GlgzjopFjQz2AHEYci4icoKLqIgyi4ODp2c3DwpWCxFaFIKUoplYJUiD5iHppekosvueS3tHDP5Xr/X3L33NXns1gsFovFYjEXv9tT7+6JNEXGeK6UXB/zOx0iB/+PSKcByXcFg0Ln9dpokHpVJswzgJOPxeJCBvL5HKlXZcIcA6zkIVFewJgqE9obCPAmh8HJXx6tcw01NstXx4t5BnDSozNrXGFB3dXxBqmPJ1JK7gfmGcBAosBDoUi+9g9EqVJcpwpzDEDvEk+kSPeZO023DZFlQjXaG3DdjTqZwKi6+gDmGMBPXpmdfSrcqYmRttP7PHtNbV9OLrSsF31O8L4BSB4n7gQ2gg3kbmkjwPbWJjW0kxHvGpBNnheWAQwYYZnQ3oD08wALmPt4zssSCHz8RJgR2IQ1AKhKHuZ8s/lGhvb7O8mnuWtgsveRmr7Qy+D7gts5D8kfpJPkePOrGa5lY9eAaiD5s905MnRi5cTQqxB+AvspcO8D1O4uuA7p/TWAr7+i/8jIEh4a/9y10HYI7xv4LcA0GJ5eOjTjTiz8VgISivRFXMmp12tk/5dqtWWvw+o+MXYNsCg9lcgmlqlQKEwZwLC6T88Z0H4K2RP4a7Q3IP1Wolwpc4XPWyeL9gaE78SAU1eKexsWvNd7FuYaAKKDw3vMeAQo3t8sCpR/ob2Bd8IDzgrWftDMAAAAAElFTkSuQmCC"};
+const PEOPLE={corvina:["Corvina","RED · NO VAVA: REYNA"],doc:["Doc Ferraz","RED · NO VAVA: PHOENIX"],lirio:["Lírio Maré","BLUE · NO VAVA: VYSE"],ivone:["Dona Ivone","BLUE · NO VAVA: ASTRA"]};
+const R=[
+ {t:"Reconhecimento",site:"Site A · Escritório",vava:"reconhecimento antes de escolher o site",cena:"Primeira badalada. A Corvina percorre os portões da Casa Vésper, um por um, vendo quem responde. No painel da madrugada, o Lírio vê alguma coisa se mexer.",
+  red:"corvina",blue:"lirio",ro:["Varrer a cidade inteira pra achar mais alvos.","Varrer os portões do escritório, um por vez, só dentro do Véu."],rg:1,
+  bo:["Anotar o alerta com horário e origem e avisar o time.","Ficar olhando a tela sozinho, sem avisar ninguém."],bg:0,
+  wr:"Fora do Véu é fora do Pacto: o Red só age no escopo combinado.",wb:"Alerta anotado e compartilhado vira prova. O Lírio sozinho é o defeito dele."},
+ {t:"A porta simples",site:"Site A · Escritório",vava:"achar a entrada menos vigiada",cena:"O Doc não tem pressa. Em toda casa alguém esquece uma porta aberta: uma conta de teste, com senha fraca, que ninguém lembra que existe.",
+  red:"doc",blue:"ivone",ro:["Testar a conta de teste fraca que está no roteiro.","Tentar a senha de uma pessoa de verdade."],rg:0,
+  bo:["Achar que é alarme falso: “já vi isso antes”.","Lembrar da conta de teste esquecida e bloquear."],bg:1,
+  wr:"Só valem as contas de teste fornecidas. Credencial de gente de verdade é proibida.",wb:"Conhecer o terreno é a força da Dona Ivone; o “já vi isso antes” é o defeito dela."},
+ {t:"Plantar a spike",site:"Site B · Casa das Bombas",vava:"plantar a spike no B",cena:"Meia-noite. A Corvina sussurra uma ordem ao controlador das bombas. No painel do Lírio, tudo continua verde: a tela foi enfeitiçada.",
+  red:"corvina",blue:"lirio",ro:["Fazer a jogada mais bonita e não registrar nada.","Seguir o plano do Doc e mandar a ordem pelo caminho do roteiro."],rg:1,
+  bo:["Confiar no painel: está tudo verde.","Desconfiar do painel verde e comparar com a última leitura."],bg:1,
+  wr:"Ataque bonito sem registro não ensina ninguém. É o defeito da Corvina.",wb:"A tela foi enfeitiçada: confira o processo, não só a tela.",spike:true},
+ {t:"Desarmar",site:"Site B · Casa das Bombas",vava:"desarmar a spike",cena:"Lá embaixo, a Dona Ivone ouve uma bomba cantar errado. Ela não confia na tela: desce a escada pra ver com os próprios olhos.",
+  red:"doc",blue:"ivone",ro:["Segurar a posição e registrar cada passo.","Repetir o plano mesmo com tudo mudando."],rg:0,
+  bo:["Descer até a casa de bombas e conferir no campo.","Esperar o painel avisar."],bg:0,
+  wr:"Registro é o que transforma ataque em lição. Rigidez é o defeito do Doc.",wb:"A Dona Ivone ouve a bomba e confere no campo, como na história."}
+];
+const STEPS=["O Pacto","Round 1","Round 2","Round 3","Round 4","O bilhete","Veredito"];
+let st={cur:0,sr:0,sb:0,pick:{},res:{},spike:false,bil:-1};
+function save(){try{localStorage.setItem("pacto_painel",JSON.stringify(st))}catch(e){}}
+try{const o=JSON.parse(localStorage.getItem("pacto_painel")||"null"); if(o) st=o;}catch(e){}
+let cur=st.cur;
+const $=id=>document.getElementById(id);
+function score(){ $("sr").textContent=st.sr; $("sb").textContent=st.sb; }
+function adj(t,d){ if(t==="r") st.sr+=d; else st.sb+=d; score(); save(); }
+function roll(){ const a=new Uint32Array(1); crypto.getRandomValues(a); return 1+(a[0]%20); }
+function nav(){ $("steps").innerHTML=STEPS.map((s,i)=>`<button class="${i===cur?'on':''}" onclick="go(${i})">${s}</button>`).join(""); }
+function go(i){ if(i<0||i>=STEPS.length) return; cur=i; st.cur=i; save(); nav(); render(); window.scrollTo(0,0); }
+function who(k,extra){ const p=PEOPLE[k]; return `<div class="who"><div class="spr"><img src="${SP[k]}" alt=""></div><div><b>${p[0]}</b><span>${p[1]}</span></div><div style="margin-left:auto">${extra||""}</div></div>`; }
+function render(){
+ const m=$("main");
+ if(cur===0){ m.innerHTML=`<div class="kick">STARTEX · a Ysolde (Prof. Galvão) lê em voz alta</div><h1>O Pacto desta noite</h1>
+  <ol class="rules"><li>Ninguém age fora do Véu.</li><li>Cada grupo só joga no seu round.</li><li>Acordo entre times é proibido.</li><li>Quem gritar “Ferro!” para a noite inteira.</li><li>A Corte de Prata não joga, só julga.</li></ol>
+  <p class="note">Como jogar: ouvir a cena · cada grupo da vez levanta a placa A ou B · o painel rola 1d20 pra cada lado. Jogada boa ganha +3. Maior vence; empate é da defesa.</p>
+  <button class="btn amb" onclick="go(1)">Começar a noite</button>
+  <button class="btn ghost" onclick="if(confirmReset())reset()">Zerar o campeonato</button>`; return; }
+ if(cur>=1&&cur<=4){ const n=cur-1, r=R[n]; const pk=st.pick[n]||{}, rs=st.res[n];
+  let title=r.t, extra="";
+  if(n===3 && !st.spike){ title="Segunda tentativa"; extra=`<p class="note">A spike não foi plantada no round 3: agora o Red tenta de novo. Se o Red vencer, o pendrive vai pro site B.</p>`; }
+  if(n===3 && st.spike){ extra=`<p><span class="spike">SPIKE NO SITE B</span> &nbsp;O Blue precisa desarmar. Se o Blue vencer, o pendrive volta.</p>`; }
+  const opts=(side,arr,good)=>arr.map((o,i)=>{ let c="opt"; if(pk[side]===i) c+=" sel"; if(rs){ c+= (i===good?" good":" bad"); }
+    return `<button class="${c}" ${rs?"disabled":""} onclick="choose(${n},'${side}',${i})"><span class="l">${"AB"[i]}</span><span>${o}${rs&&pk[side]===i?' <em style="color:#94600E;font-size:15px">· escolha do grupo</em>':''}</span></button>`; }).join("");
+  const dice=(side)=> rs?`<div class="dice"><div class="d20" id="d${side}">${rs[side].d}</div><span>+ ${rs[side].bon} =</span><span class="tot">${rs[side].d+rs[side].bon}</span></div>`:`<div class="dice"><div class="d20" id="d${side}">?</div></div>`;
+  let resHtml="";
+  if(rs){ const rw=rs.win==="r"; let spk=""; if(rw && (n===2 || (n===3 && rs.wasPlant))) spk=" Spike plantada no B! O pendrive vai pro site B."; if(!rw && n===3 && rs.hadSpike) spk=" Spike desarmada! O pendrive volta pro site A.";
+    resHtml=`<div class="res ${rw?'r':'b'}"><div style="display:flex;align-items:center;justify-content:center;gap:16px"><span>${rw?"Round do RED":"Round do BLUE"}${rs.r.d+rs.r.bon===rs.b.d+rs.b.bon?" (empate é da defesa)":""}.${spk}</span><button class="btn ghost" style="font-size:13px;padding:3px 10px" onclick="undo(${n})">Desfazer</button></div>
+     <div class="why"><b>Jogada boa do Red: ${"AB"[r.rg]}.</b> ${r.wr}<br><b>Jogada boa do Blue: ${"AB"[r.bg]}.</b> ${r.wb}</div></div>`; }
+  m.innerHTML=`<div class="kick">Round ${n+1} · ${r.site} · <span style="color:#6A50C0">No Vava: ${r.vava}</span></div><h1>${title}</h1><div class="cena">${r.cena}</div>${extra}
+   <div class="grid2"><div class="side red">${who(r.red,dice("r"))}${opts("r",r.ro,r.rg)}</div><div class="side blue">${who(r.blue,dice("b"))}${opts("b",r.bo,r.bg)}</div></div>
+   ${rs?"":`<div style="margin-top:12px;display:flex;gap:10px;align-items:center"><button class="btn amb" id="rollb" ${(pk.r===undefined||pk.b===undefined)?"disabled":""} onclick="doRoll(${n})">Rolar os dados</button><span class="note">Marque a placa de cada grupo e role.</span></div>`}${resHtml}`; return; }
+ if(cur===5){ const rows=[["Bilhete levado à Corte de Prata",-1,1],["Acordo aceito em silêncio",-2,-2],["Bilhete mandado e ignorado",-1,0],["Nenhum bilhete",0,0]];
+  m.innerHTML=`<div class="kick">PAUSA · a Ysolde pergunta: um bilhete atravessou a sala. O que dizia?</div><h1>O bilhete da dívida</h1>
+  <p class="note">Toque na linha do que aconteceu. Os pontos entram no placar; tocar de novo em outra linha troca o ajuste.</p>
+  <table><tr><th>O que aconteceu</th><th>Red</th><th>Blue</th></tr>${rows.map((r,i)=>`<tr class="${st.bil===i?'pick':''}" onclick="bilhete(${i},${r[1]},${r[2]})"><td>${r[0]}</td><td>${r[1]>0?'+':''}${r[1]}</td><td>${r[2]>0?'+':''}${r[2]}</td></tr>`).join("")}</table>
+  <p class="cena" style="margin-top:18px">O monitor que acompanhou o Blue: “Fui professor do Lírio. Estou impedido de avaliar esse grupo.”</p>`; return; }
+ if(cur===6){ const w=st.sr>st.sb?"Corte do Espinho (Red)":st.sb>st.sr?"Corte da Maré (Blue)":"Empate: ninguém ganhou tudo";
+  m.innerHTML=`<div class="kick">Manhã seguinte · a Ysolde lê o placar e assina</div><h1>Veredito</h1>
+  <div class="big">RED ${st.sr} × ${st.sb} BLUE</div><p style="font-size:28px;font-weight:700;color:var(--ambd)">${w}</p>
+  <div class="les"><div><b>Nota sai de registro</b>Cada ponto tem uma jogada e um dado por trás.</div><div><b>Quem tem vínculo não avalia</b>O Bené se declarou impedido.</div><div><b>A tela pode mentir</b>Confira o processo, não só a tela.</div></div>
+  <p class="cena" style="margin-top:18px">O que a Corte de Prata viu que vocês não viram? · O pendrive volta pra Corte de Prata. ENDEX.</p>`; }
+}
+function choose(n,side,i){ st.pick[n]=st.pick[n]||{}; st.pick[n][side]=i; save(); render(); }
+function doRoll(n){ const r=R[n], pk=st.pick[n]; const b=$("rollb"); b.disabled=true; let k=0;
+ const iv=setInterval(()=>{ $("dr").textContent=roll(); $("db").textContent=roll(); if(++k>12){ clearInterval(iv); finish(); } },70);
+ function finish(){ const res={r:{d:roll(),bon:pk.r===r.rg?3:0},b:{d:roll(),bon:pk.b===r.bg?3:0}};
+  res.win=(res.r.d+res.r.bon)>(res.b.d+res.b.bon)?"r":"b";
+  res.hadSpike=st.spike;
+  if(n===2 && res.win==="r") st.spike=true;
+  if(n===3){ if(st.spike){ res.wasPlant=false; if(res.win==="b") st.spike=false; } else { res.wasPlant=true; if(res.win==="r") st.spike=true; } }
+  if(res.win==="r") st.sr++; else st.sb++;
+  st.res[n]=res; save(); score(); render(); const el=document.querySelector('.res'); if(el) el.scrollIntoView({behavior:'smooth',block:'end'}); }
+}
+function undo(n){ const rs=st.res[n]; if(!rs) return; if(rs.win==="r") st.sr--; else st.sb--; delete st.res[n];
+ if(n===2){ st.spike=false; } if(n===3){ st.spike=!!rs.hadSpike; } save(); score(); render(); }
+function bilhete(i,dr,db){ if(st.bil>=0){ const old=[[-1,1],[-2,-2],[-1,0],[0,0]][st.bil]; st.sr-=old[0]; st.sb-=old[1]; } st.bil=i; st.sr+=dr; st.sb+=db; save(); score(); render(); }
+function confirmReset(){ return window.confirm ? (function(){try{return confirm("Zerar placar e rounds?")}catch(e){return true}})() : true; }
+function reset(){ st={cur:0,sr:0,sb:0,pick:{},res:{},spike:false,bil:-1}; cur=0; save(); score(); nav(); render(); }
+let tmI=null; function timer(){ clearInterval(tmI); let t=60; $("tm").textContent="1:00"; tmI=setInterval(()=>{ t--; $("tm").textContent=t>0?("0:"+String(t).padStart(2,"0")):"Tempo!"; if(t<=0) clearInterval(tmI); },1000); }
+document.addEventListener("keydown",e=>{ if(e.key==="ArrowRight") go(cur+1); if(e.key==="ArrowLeft") go(cur-1); });
+score(); nav(); render();
+</script>
+</body>
+</html>

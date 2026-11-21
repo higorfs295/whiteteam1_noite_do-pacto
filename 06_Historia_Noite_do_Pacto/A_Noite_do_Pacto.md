@@ -24,9 +24,20 @@ Toda a água da cidade passa pelas bombas da **Casa Vésper**, uma companhia de 
 | O livro de registros de prata | Registro do avaliador e logs |
 | O bestiário | MITRE ATT&CK (o catálogo de técnicas) |
 
+# As quatro leis do mundo
+
+Cada mania das fadas é um cuidado da White Team, e cada uma vira uma regra do campeonato.
+
+| Lei das fadas | O que significa | Cuidado da White Team | No Vava |
+|---|---|---|---|
+| Fada não mente | Quem julga diz a verdade, sempre com prova | Nota sai de registro | O árbitro decide pelo registro |
+| Fada adora brecha | Regra mal escrita vira jogada | O Pacto fecha os furos | Regulamento sem brecha |
+| Dívida de fada | Quem tem vínculo com um time não avalia esse time | Conflito de interesse | Admin não apita jogo do amigo |
+| Ferro para tudo | Gritou "Ferro!", a noite para | MUNDO REAL | Pausa técnica |
+
 # Os atributos
 
-Cada equipe tem cinco atributos, em escala de 1 a 20, como no D&D. Notas baixas são de propósito: ninguém é perfeito.
+Cada equipe tem cinco atributos, em escala de 1 a 20, como no D&D. Notas baixas são de propósito: ninguém é perfeito. Os atributos servem pra conhecer o personagem; no campeonato jogado em sala eles não entram na conta.
 
 | Red Team (Corte do Espinho) | Blue Team (Corte da Maré) | White Team (Corte de Prata) |
 |---|---|---|
@@ -79,6 +90,30 @@ Neto de imigrantes japoneses, nascido e criado em Nova Aurora. Ex-professor de x
 *Em três palavras:* observador · gentil · disperso.\
 Imparcialidade 11 · Clareza 13 · Leitura de sala 18 · Gestão do tempo 9 · Rigor de evidência 16\
 **Defeito:** coração mole. Quer ajudar quem está perdido e se atrasa nos *injects* porque sempre fica conversando.
+
+# No Vava
+
+Pra explicar de forma lúdica, cada personagem tem um agente do Valorant parecido com ele. Os pares foram escolhidos pela equipe; o paralelo com o Valorant e as referências do jogo são do João Vitor.
+
+| Personagem | Corte | No Vava |
+|---|---|---|
+| Corvina | Espinho (Red) | Reyna |
+| Doc Ferraz | Espinho (Red) | Phoenix |
+| Lírio Maré | Maré (Blue) | Vyse |
+| Dona Ivone | Maré (Blue) | Astra |
+| Ysolde de Prata | Prata (White) | Clove |
+| Bené Takeda | Prata (White) | Iso |
+
+A Noite do Pacto vira uma partida de campeonato:
+
+- a Casa Vésper é o mapa, com o site A no escritório e o site B na casa das bombas;
+- a válvula é a spike;
+- o Pacto é o regulamento;
+- o Véu é o servidor;
+- "Ferro!" é a pausa técnica;
+- a Corte de Prata é a organização e os juízes.
+
+O campeonato jogado em sala está no Roteiro do Campeonato: cada grupo escolhe a jogada A ou B com uma placa, o painel rola os dados e a jogada boa ganha +3. A dívida entre a Corvina e o Lírio vira um bilhete de papel que atravessa a sala.
 
 # A mini-história: a Noite do Pacto
 
